@@ -1,0 +1,30 @@
+version: '3.12'
+
+services:
+  backend:
+    build: .
+    volumes:
+      - .:/app
+    ports:
+      - 8000:8000
+    depends_on:
+      - mysql-db
+      - redis
+  
+  mysql-db:
+    image: mysql:8.4.1
+    environment:
+      - MYSQL_DATABASE=ambassador
+      - MYSQL_USER=ivan
+      - MYSQL_PASSWORD=ivan
+      - MYSQL_ROOT_PASSWORD=root
+    restart: always
+    volumes:
+      - .dbdata:/var/lib/mysql
+    ports:
+      - 33066:3306
+  
+  redis:
+    image: redis
+    ports:
+      - 6379:6379
