@@ -7,10 +7,10 @@
       >Hello, {{ user ? user.first_name : "User" }}</a
     >
     <nav class="my-2 my-md-0 mr-md-3">
-      <RouterLink href="/profile" class="p-2 text-white text-decoration-none"
+      <RouterLink to="/profile" class="p-2 text-white text-decoration-none"
         >{{ user && user.first_name + " " + user.last_name }}
       </RouterLink>
-      <a href="#" class="p-2 text-white text-decoration-none">Log out </a>
+      <a href="#" class="p-2 text-white text-decoration-none" @click="logout">Log out </a>
     </nav>
     <ul class="navbar-nav flex-row d-md-none">
       <li class="nav-item text-nowrap">
@@ -55,8 +55,17 @@
 
 <script setup>
 import { defineProps } from "vue";
+import { useRouter } from "vue-router";
+import client from "@/services/axiosClient";
 
 const props = defineProps({
   user: Object,
 });
+
+const router = useRouter()
+
+const logout = async () => {
+  await client.post('/logout')
+  await router.push('/login')
+}
 </script>

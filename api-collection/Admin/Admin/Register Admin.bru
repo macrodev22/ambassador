@@ -1,0 +1,21 @@
+meta {
+  name: Register Admin
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{BASE}}/api/admin/register
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "email": "irwin@gmail.com",
+    "first_name" : "Irwin",
+    "last_name": "Sempebwa",
+    "password" : "testpassword",
+    "password_confirm" : "testpassword"
+  }
+}

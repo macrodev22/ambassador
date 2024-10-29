@@ -5,7 +5,7 @@ RUN apk update && \
     apk add --no-cache gcc musl-dev pkgconfig mariadb-dev mariadb-connector-c-dev
 
 # Show python logs in console
-ENV PYTHONUNBUFFERED 1
+ENV PYTHONUNBUFFERED=1
 
 WORKDIR /app
 COPY requirements.txt .
@@ -23,4 +23,4 @@ RUN chown -R appuser:appgroup /app
 # switch user
 USER appuser
 
-CMD python manage.py wait_for_db && python manage.py runserver 0.0.0.0:8000
+CMD ["sh", "-c", "python manage.py wait_for_db && python manage.py runserver 0.0.0.0:8000"]

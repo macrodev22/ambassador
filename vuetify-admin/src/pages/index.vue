@@ -3,7 +3,7 @@
 </template>
 
 <script setup>
-import Dashboard from "@/pages/Dashboard.vue";
+import Dashboard from "@/layouts/Dashboard.vue";
 
 //
 </script>

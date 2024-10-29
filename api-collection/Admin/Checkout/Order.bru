@@ -1,0 +1,29 @@
+meta {
+  name: Order
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{BASE}}/api/checkout/orders
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "code": "34edf35",
+    "first_name": "Irwin",
+    "last_name" : "Sempebwa",
+    "email" : "irwin@gmail.com",
+    "address" : "Seguku, Nazibar near Bertina",
+    "country" : "Uganda",
+    "city" : "Kampala",
+    "zip" : 256, 
+    "products" : [
+      { "product_id": 2, "quantity": 3 },
+      { "product_id": 4, "quantity": 2 },
+      { "product_id": 6, "quantity": 1 }
+    ]
+  }
+}

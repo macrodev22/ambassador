@@ -23,14 +23,24 @@
       >
         <ul class="nav flex-column">
           <li class="nav-item">
-            <a
+            <RouterLink
               class="nav-link d-flex align-items-center gap-2 active"
               aria-current="page"
-              href="#"
+              to="/users"
             >
               <svg class="bi"><use xlink:href="#house-fill" /></svg>
-              Dashboard
-            </a>
+              Users
+            </RouterLink>
+          </li>
+          <li class="nav-item">
+            <RouterLink
+              class="nav-link d-flex align-items-center gap-2 active"
+              aria-current="page"
+              to="/products"
+            >
+              <svg class="bi"><use xlink:href="#house-fill" /></svg>
+              Products
+            </RouterLink>
           </li>
           <li class="nav-item">
             <a

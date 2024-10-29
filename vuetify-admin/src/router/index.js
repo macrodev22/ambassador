@@ -8,10 +8,26 @@
 import { createRouter, createWebHistory } from 'vue-router/auto'
 import { setupLayouts } from 'virtual:generated-layouts'
 import { routes } from 'vue-router/auto-routes'
+import Links from '@/pages/users/Links.vue'
+import Dashboard from '@/layouts/Dashboard.vue'
+import Users from '@/components/Users.vue'
+import Products from '@/components/Products.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  routes: setupLayouts(routes),
+  routes: [
+    {
+      path: '/',
+      component: Dashboard,
+      children: [
+        { path: '', redirect: '/users' },
+        { path: '/users', component:  Users},
+        { path: '/users/:id/links', component: Links},
+        { path: '/products', component: Products }
+      ]
+    },
+    ...setupLayouts(routes), 
+  ]
 })
 
 // Workaround for https://github.com/vitejs/vite/issues/11804
