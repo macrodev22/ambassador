@@ -1,13 +1,13 @@
 import { defineStore } from "pinia";
 
-const store = defineStore('store', {
+const useStore = defineStore('store', {
     state: () => {
         return {
             auth: {
-            user:null,
+            user: JSON.parse(localStorage.getItem('user')) || null,
         },
     }
     }
 })
 
-export default store
+export default useStore

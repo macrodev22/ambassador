@@ -73,7 +73,7 @@
             <h1 class="h3 mb-3 fw-normal">Ambassador Sign in</h1>
 
             <div class="form-floating">
-                <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com"
+                <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" autocomplete="email"
                     v-model="email">
                 <label for="floatingInput">Email address</label>
             </div>
@@ -90,28 +90,43 @@
                 </label>
             </div>
             <button class="btn btn-primary w-100 py-2" type="submit" @click.prevent="signin">Sign in</button>
+            <div class="mt-4">
+                Don't have an account? <RouterLink to="/register">Register</RouterLink>
+            </div>
             <p class="mt-5 mb-3 text-body-secondary">&copy; 2017–2024</p>
         </form>
     </main>
 </template>
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import client from '../services/client.js'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
+import useStore from '../store';
 
 const email = ref('')
 const password = ref('')
 
 const router = useRouter()
+const store = useStore()
 
 const signin = async () => {
     try {
         const { data } = await client.post('/login', { email: email.value, password: password.value })
+        store.auth.user = data
+        localStorage.setItem('user', JSON.stringify(data))
+
         await router.push('/')
     } catch (err) {
         alert(`Error! ${err}`)
     }
 }
+
+onMounted(() => {
+    const userEmail = useRoute().query.email
+    if (userEmail) {
+        email.value = userEmail
+    }
+})
 </script>
 
 <style>

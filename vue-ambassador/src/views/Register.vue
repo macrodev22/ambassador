@@ -68,13 +68,13 @@
     </div>
 
 
-    <main class="form-signin w-100 m-auto">
+    <main class="form-register w-100 m-auto">
         <form>
             <h1 class="h3 mb-3 fw-normal">Ambassador Register</h1>
 
             <div class="form-floating">
                 <input type="text" class="form-control top" id="floatingInput" placeholder="name@example.com"
-                    v-model="fisrt_name">
+                    v-model="first_name">
                 <label for="floatingInput">First Name</label>
             </div>
             <div class="form-floating">
@@ -88,9 +88,14 @@
                 <label for="floatingInput">Email address</label>
             </div>
             <div class="form-floating">
-                <input type="password" class="form-control" id="floatingPassword" placeholder="Password"
+                <input type="password" class="form-control mid" id="floatingPassword" placeholder="Password"
                     v-model="password">
                 <label for="floatingPassword">Password</label>
+            </div>
+            <div class="form-floating">
+                <input type="password" class="form-control bottom" id="floatingPassword" placeholder="Password"
+                    v-model="password_confirm">
+                <label for="floatingPassword">Confimr Password</label>
             </div>
 
             <div class="form-check text-start my-3">
@@ -100,7 +105,10 @@
                     Remember me
                 </label>
             </div>
-            <button class="btn btn-primary w-100 py-2" type="submit" @click.prevent="register">Sign in</button>
+            <button class="btn btn-primary w-100 py-2" type="submit" @click.prevent="register">Register</button>
+            <div class="mt-4">
+                Already have an account? <RouterLink to="/login">Login</RouterLink>
+            </div>
             <p class="mt-5 mb-3 text-body-secondary">&copy; 2017–2024</p>
         </form>
     </main>
@@ -109,10 +117,12 @@
 import { ref } from 'vue'
 import client from '../services/client.js'
 import { useRouter } from 'vue-router'
+import useStore from '../store'
 
 const email = ref('')
 const password = ref('')
-const fisrt_name = ref('')
+const password_confirm = ref('')
+const first_name = ref('')
 const last_name = ref('')
 const remember = ref(true)
 
@@ -120,8 +130,15 @@ const router = useRouter()
 
 const register = async () => {
     try {
-        const { data } = await client.post('/register', { email: email.value, password: password.value, fisrt_name: first_name.value, last_name: last_name.value })
-        await router.push('/')
+        const { data } = await client.post('/register', { 
+            email: email.value, 
+            password: password.value, 
+            password_confirm: password_confirm.value, 
+            first_name: first_name.value, 
+            last_name: last_name.value, 
+        })
+
+        await router.push(`/login?email=${email.value}`)
     } catch (err) {
         alert(`Error! ${err}`)
     }
@@ -134,29 +151,29 @@ body {
     height: 100%;
 }
 
-.form-signin {
+.form-register {
     max-width: 330px;
     padding: 1rem;
 }
 
-.form-signin .form-floating:focus-within {
+.form-register .form-floating:focus-within {
     z-index: 2;
 }
 
-.form-signin input.top {
+.form-register input.top {
     margin-bottom: -1px;
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;
 }
 
-.form-signin input.mid {
+.form-register input.mid {
     border-top-right-radius: 0;
     border-top-left-radius: 0;
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;
 }
 
-.form-signin input[type="password"] {
+.form-register input.bottom {
     margin-bottom: 10px;
     border-top-left-radius: 0;
     border-top-right-radius: 0;

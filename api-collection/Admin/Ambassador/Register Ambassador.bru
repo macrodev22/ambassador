@@ -1,0 +1,21 @@
+meta {
+  name: Register Ambassador
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{BASE}}/api/ambassador/register
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "email": "ian@gmail.com",
+    "first_name" : "Ian",
+    "last_name": "Mubiru",
+    "password" : "testpassword",
+    "password_confirm" : "testpassword"
+  }
+}
