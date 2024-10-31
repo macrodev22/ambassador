@@ -73,8 +73,8 @@
             <h1 class="h3 mb-3 fw-normal">Ambassador Sign in</h1>
 
             <div class="form-floating">
-                <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" autocomplete="email"
-                    v-model="email">
+                <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com"
+                    autocomplete="email" v-model="email">
                 <label for="floatingInput">Email address</label>
             </div>
             <div class="form-floating">
@@ -89,35 +89,53 @@
                     Remember me
                 </label>
             </div>
-            <button class="btn btn-primary w-100 py-2" type="submit" @click.prevent="signin">Sign in</button>
+            <button :disabled="isLoading" class="btn btn-primary w-100 py-2" type="submit" @click.prevent="signin">
+                <div class="spinner-border spinner-border-sm me-2" role="status" v-if="isLoading">
+                    <span class="visually-hidden">Loading...</span>
+                </div>Sign in
+            </button>
             <div class="mt-4">
                 Don't have an account? <RouterLink to="/register">Register</RouterLink>
             </div>
             <p class="mt-5 mb-3 text-body-secondary">&copy; 2017–2024</p>
         </form>
+        <Modal v-if="showAlert" :title="alertTitle" :message="alertMessage" @close-modal="showAlert = false" />
     </main>
 </template>
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import client from '../services/client.js'
 import { useRouter, useRoute } from 'vue-router'
 import useStore from '../store';
-
-const email = ref('')
-const password = ref('')
+import Modal from '../components/Modal.vue';
 
 const router = useRouter()
 const store = useStore()
 
+const email = ref('')
+const password = ref('')
+
+const isLoading = computed(() => store.isLoading)
+
+
+const showAlert = ref(false)
+const alertTitle = ref('')
+const alertMessage = ref('')
+
 const signin = async () => {
+    store.setLoading(true)
     try {
         const { data } = await client.post('/login', { email: email.value, password: password.value })
         store.auth.user = data
         localStorage.setItem('user', JSON.stringify(data))
-
         await router.push('/')
     } catch (err) {
-        alert(`Error! ${err}`)
+        // alert(`Error! ${err}`)
+        alertTitle.value = 'Login Error'
+        alertMessage.value = `${err}`
+        showAlert.value = true
+    } finally {
+        store.setLoading(false)
     }
 }
 

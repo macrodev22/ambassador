@@ -6,7 +6,13 @@ const useStore = defineStore('store', {
             auth: {
             user: JSON.parse(localStorage.getItem('user')) || null,
         },
+        isLoading: false,
     }
+    },
+    actions: {
+        setLoading(status) {
+            this.isLoading = status
+        },
     }
 })
 

@@ -105,19 +105,31 @@
                     Remember me
                 </label>
             </div>
-            <button class="btn btn-primary w-100 py-2" type="submit" @click.prevent="register">Register</button>
+            <button :disabled="isLoading" class="btn btn-primary w-100 py-2" type="submit" @click.prevent="register">
+                <div v-if="isLoading" class="spinner-border spinner-border-sm" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                Register
+            </button>
             <div class="mt-4">
                 Already have an account? <RouterLink to="/login">Login</RouterLink>
             </div>
             <p class="mt-5 mb-3 text-body-secondary">&copy; 2017–2024</p>
         </form>
+        <Modal v-if="showAlert" :title="alertTitle" :message="alertMessage" @close-modal="showAlert = false" />
     </main>
 </template>
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import client from '../services/client.js'
 import { useRouter } from 'vue-router'
 import useStore from '../store'
+import Modal from '../components/Modal.vue'
+
+const store = useStore()
+const router = useRouter()
+
+const isLoading = computed(() => store.isLoading)
 
 const email = ref('')
 const password = ref('')
@@ -126,21 +138,30 @@ const first_name = ref('')
 const last_name = ref('')
 const remember = ref(true)
 
-const router = useRouter()
+const alertTitle = ref('')
+const alertMessage = ref('')
+const showAlert = ref(false)
+
 
 const register = async () => {
+    store.setLoading(true)
     try {
-        const { data } = await client.post('/register', { 
-            email: email.value, 
-            password: password.value, 
-            password_confirm: password_confirm.value, 
-            first_name: first_name.value, 
-            last_name: last_name.value, 
+        const { data } = await client.post('/register', {
+            email: email.value,
+            password: password.value,
+            password_confirm: password_confirm.value,
+            first_name: first_name.value,
+            last_name: last_name.value,
         })
 
-        await router.push(`/login?email=${email.value}`)
+        await router.push(`/login?email=${data.email}`)
     } catch (err) {
-        alert(`Error! ${err}`)
+        // alert(`Error! ${err}`)
+        alertTitle.value = 'Registration Error!'
+        alertMessage.value = `${err}`
+        showAlert.value = true
+    } finally {
+        store.setLoading(false)
     }
 }
 </script>
