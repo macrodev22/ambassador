@@ -1,0 +1,19 @@
+meta {
+  name: Update User Data
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{BASE}}/api/ambassador/users/info
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "email": "ian@gmail.com",
+    "first_name" : "Ian",
+    "last_name": "Mubiru"
+  }
+}

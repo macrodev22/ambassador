@@ -15,7 +15,7 @@ from .serializers import LinkSerializer, ProductSerializer
 class ProductFrontEndAPIView(APIView):
     @method_decorator(cache_page(60*60*2, key_prefix='products_frontend'))
     def get(self, request):
-        products = Product.objects.all()
+        products = Product.objects.all() 
         serializer = ProductSerializer(products, many=True)
 
         return Response(serializer.data)

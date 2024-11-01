@@ -1,0 +1,20 @@
+meta {
+  name: Create Product
+  type: http
+  seq: 8
+}
+
+post {
+  url: {{BASE}}/api/admin/products
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "title": "Spares",
+    "description": "Spares parts for all laptops",
+    "price": 45230,
+    "image": "https://google.com"
+  }
+}

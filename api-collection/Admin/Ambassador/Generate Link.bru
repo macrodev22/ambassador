@@ -1,0 +1,17 @@
+meta {
+  name: Generate Link
+  type: http
+  seq: 10
+}
+
+post {
+  url: {{BASE}}/api/ambassador/links
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "products": [2, 4, 7]
+  }
+}

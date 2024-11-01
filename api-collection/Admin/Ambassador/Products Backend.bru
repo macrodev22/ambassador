@@ -1,0 +1,16 @@
+meta {
+  name: Products Backend
+  type: http
+  seq: 9
+}
+
+get {
+  url: {{BASE}}/api/ambassador/products/backend?sort=desc&s=
+  body: none
+  auth: none
+}
+
+params:query {
+  sort: desc
+  s: 
+}

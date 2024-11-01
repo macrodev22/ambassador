@@ -88,17 +88,21 @@ import Nav from '../components/Nav.vue'
 import Header from '../components/Header.vue';
 import client from '../services/client.js'
 import { useRouter, useRoute } from 'vue-router';
+import useStore from '../store/index.js';
 
 const user = ref(null)
 const router = useRouter()
 const route = useRoute()
+const store = useStore()
 
 const showHeader = computed(() => route.path === '/' || route.path === '/backend')
 
 onMounted(async () => {
     try {
         const { data } = await client.get('/user')
+        store.auth.user = data
         user.value = data
+        localStorage.setItem('user', JSON.stringify(data))
     } catch (err) {
         // console.error('User auth error', err)
         await router.push('/login')

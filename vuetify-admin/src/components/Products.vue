@@ -1,4 +1,7 @@
 <template>
+    <div class="pt-3 pb-2 mb-3 border-bottom">
+        <v-btn variant="elevated" href="/products/create">Add</v-btn>
+    </div>
     <v-table theme="dark">
         <thead>
             <tr>

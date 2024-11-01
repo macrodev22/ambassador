@@ -5,6 +5,8 @@ import Register from '../views/Register.vue'
 import Profile from "../views/Profile.vue";
 import ProductsFrontend from "../views/ProductsFrontend.vue";
 import Backend from "../views/Backend.vue";
+import Stats from "../views/Stats.vue";
+import Rankings from "../views/Rankings.vue";
 
 const routes = [
    { path: '/login', component: Login, },
@@ -16,6 +18,8 @@ const routes = [
             { path: '', component: ProductsFrontend, },
             { path: '/profile', component: Profile, },
             { path: '/backend', component: Backend },
+            { path: '/rankings', component: Rankings },
+            { path: '/stats', component: Stats },
          ]
    },
 ]
