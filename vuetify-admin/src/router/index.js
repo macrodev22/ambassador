@@ -13,6 +13,8 @@ import Dashboard from '@/layouts/Dashboard.vue'
 import Users from '@/components/Users.vue'
 import Products from '@/components/Products.vue'
 import ProductForm from '@/components/ProductForm.vue'
+import Orders from '@/components/Orders.vue'
+import Profile from '@/components/Profile.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -24,8 +26,11 @@ const router = createRouter({
         { path: '', redirect: '/users' },
         { path: '/users', component:  Users},
         { path: '/users/:id/links', component: Links},
+        { path: '/profile', component: Profile },
+        { path: '/orders', component: Orders },
         { path: '/products', component: Products },
         { path: '/products/create', component: ProductForm },
+        { path: '/products/:id/edit', component: ProductForm },
       ]
     },
     ...setupLayouts(routes), 

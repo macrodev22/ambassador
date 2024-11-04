@@ -41,6 +41,14 @@
               <svg class="bi"><use xlink:href="#house-fill" /></svg>
               Products
             </RouterLink>
+            <RouterLink
+              class="nav-link d-flex align-items-center gap-2 active"
+              aria-current="page"
+              to="/orders"
+            >
+              <svg class="bi"><use xlink:href="#house-fill" /></svg>
+              Orders
+            </RouterLink>
           </li>
           <li class="nav-item">
             <a

@@ -2,7 +2,7 @@
     <div class="input-group mb-3">
         <span class="input-group-text" id="inputGroup-sizing-default">Search</span>
         <input type="text" class="form-control" aria-label="Sizing example input"
-            aria-describedby="inputGroup-sizing-default" @keyup="emit('set-search-filter', $event.target.value)" >
+            aria-describedby="inputGroup-sizing-default" @keyup="updateSearchQuery" v-model="searchQuery">
     </div>
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
         <div class="col" v-for="product in products" :key="product.id">
@@ -20,9 +20,20 @@
     </div>
 </template>
 <script setup>
+import { ref } from 'vue';
+
+const searchQuery = ref('')
 
 const { products } = defineProps({ products: { type: Array, default: [] } })
 
 const emit = defineEmits(['set-search-filter'])
+
+
+let timeout
+
+const updateSearchQuery = () => {
+    clearTimeout(timeout)
+    setTimeout(() => emit('set-search-filter', searchQuery.value), 800)
+}
 
 </script>

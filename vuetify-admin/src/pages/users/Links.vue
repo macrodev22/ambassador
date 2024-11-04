@@ -19,8 +19,8 @@
             <tr v-for="link in links" :key="link.id">
                 <td>{{ link.id }}</td>
                 <td>{{ link.code }}</td>
-                <td>{{ link.orders.length }}</td>
-                <td>{{ link.orders.reduce((s, o) =>s+ o.total , 0) }}</td>
+                <td>{{ link.orders?.length || 0 }}</td>
+                <td>{{ link.orders?.reduce((s, o) =>s+ o.total , 0) || 0 }}</td>
             </tr>
         </tbody>
     </v-table>

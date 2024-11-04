@@ -23,10 +23,14 @@ class OrderSerializer(ModelSerializer):
 
     order_items = OrderItemSerializer(many=True)
     total = serializers.SerializerMethodField('get_total')
+    name = serializers.SerializerMethodField('get_name')
 
     def get_total(self, obj):
         items = OrderItem.objects.filter(order_id=obj.id)
         return sum((o.price * o.quantity) for o in items)
+    
+    def get_name(self, obj):
+        return f"{obj.first_name} {obj.last_name}"
 
     class Meta:
         model = Order 

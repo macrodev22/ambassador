@@ -14,13 +14,20 @@
             </tr>
         </thead>
         <tbody>
-            <tr v-for="product in products.slice((page-1)*perPage, page*perPage)" :key="product.id">
+            <tr v-for="product in products.slice((page - 1) * perPage, page * perPage)" :key="product.id">
                 <td>{{ product.id }}</td>
-                <td><v-img :src="product.image" max-height="80" max-width="120" /></td>
+                <td><v-img :src="product.image" max-height="80" max-width="120" class="img-fluid object-fit-cover" />
+                </td>
                 <td>{{ product.title }}</td>
                 <td>{{ product.description }}</td>
-                <td>{{ product.price }}/=</td>
-                <td><v-btn icon="mdi-trash-can" color="error" size="small" @click="deleteProduct(product.id)"></v-btn></td>
+                <td>{{ formatNumber(product.price) }}/=</td>
+                <td>
+                    <v-btn-group>
+                        <v-btn icon="mdi-trash-can" color="error" size="small"
+                            @click="deleteProduct(product.id)"></v-btn>
+                        <v-btn icon="mdi-pencil" color="primary" size="small" :href="`/products/${product.id}/edit`"></v-btn>
+                    </v-btn-group>
+                </td>
             </tr>
         </tbody>
     </v-table>
@@ -54,4 +61,13 @@ const deleteProduct = async (id) => {
     }
 }
 
+const formatNumber = (number) => Number(number).toLocaleString('en-US')
+
 </script>
+
+<style scoped>
+.object-fit-cover {
+    width: 100%;
+    object-fit: cover;
+}
+</style>
